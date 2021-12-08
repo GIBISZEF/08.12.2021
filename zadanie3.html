@@ -16,7 +16,18 @@
 
     <script type="text/javascript">
 
-        
+        document.getElementById("mojform").addEventListener("submit",sprawdzstan);
+
+        function sprawdzstan(event){
+            event.preventDefault();
+            var nazwa = document.getElementById("stan").value;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET","sprawdz.php?stan="+nazwa, true);
+            xhr.onload = function(){
+                console.log(this.responseText);
+            }
+            xhr.send();
+        }
 
     </script>
 </body>
