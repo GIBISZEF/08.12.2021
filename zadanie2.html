@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX - Ćwiczenia - pobieranie z https://api.github.com/users</title>
+    <style type="text/javascript">
+        h1{
+            text-align: center;
+        }
+        .users{
+            display: flex;
+            background-color: aliceblue;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .users-ul{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>USERS from https://api.github.com/users</h1>
+    <button id="przycisk">Załaduj</button>
+    <div id="users"></div>
+    <script type="text/javascript">
+
+        document.getElementById("przycisk").addEventListener("click",laduj);
+
+        function laduj(){
+            var XHR = new XMLHttpRequest();
+
+            XHR.open('GET', 'https://api.github.com/users', true);
+
+            XHR.onload = function(){
+                if(this.status == 200){
+                    var users = JSON.parse(this.responseText);
+                    var output = '';
+
+                    for(let i in users){
+                        output += `
+                            <div class="user">
+                                <img src="${users[i].avatar_url}" width="70px" height="70px"/>    
+                            </div>
+                            <ul>
+                                <li>${users[i].id}</li>
+                                <li>${users[i].login}</li>    
+                            </ul>
+                        `;
+                    }
+                    document.getElementById("users").innerHTML = output;
+                }
+            }
+            XHR.send();
+        };
+
+    </script>
+</body>
+</html>
